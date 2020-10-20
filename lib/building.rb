@@ -17,4 +17,12 @@ class Building
       end
     @renters
   end
+
+  def total_rent
+    @units.sum {|unit| unit.monthly_rent}
+  end
+
+  def average_rent
+    total_rent.to_f / @units.size
+  end
 end
