@@ -25,4 +25,12 @@ class Building
   def average_rent
     total_rent.to_f / @units.size
   end
+
+  def rented_units
+    @units.select do |unit|
+      if unit.renter != nil
+        unit
+      end
+    end
+  end
 end
