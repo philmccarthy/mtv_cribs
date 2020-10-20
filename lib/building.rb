@@ -39,4 +39,15 @@ class Building
       unit.monthly_rent
     end.renter
   end
+
+  def units_by_number_of_bedrooms
+    units_by_bedroom = @units.group_by do |unit|
+      unit.bedrooms
+    end
+    units_by_bedroom.each_pair do |bedrooms, units|
+      units.map! do |unit|
+        unit.number
+      end
+    end
+  end
 end
