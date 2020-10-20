@@ -41,13 +41,27 @@ class Building
   end
 
   def units_by_number_of_bedrooms
-    units_by_bedroom = @units.group_by do |unit|
-      unit.bedrooms
+    units_by_bedroom =  @units.group_by do |unit|
+                          unit.bedrooms
     end
     units_by_bedroom.each_pair do |bedrooms, units|
       units.map! do |unit|
         unit.number
       end
+    end
+  end
+
+  def annual_breakdown
+    rented =  rented_units.group_by do |unit|
+                      unit.renter.name
+                    end
+    breakdown = rented.each_pair do |renter, unit|
+                  unit.map! do |unit|
+                    unit.monthly_rent * 12
+                  end
+                end
+    breakdown.transform_values do |value|
+      value.to_s.delete('[]').to_i
     end
   end
 end
